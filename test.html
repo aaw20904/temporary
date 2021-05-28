@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+<style>
+    body{
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    p{
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 2vw;
+    }
+</style>
+
+</head>
+
+
+<body>
+<p id='info'>start..</p>
+<button id='btn'>send req</button>
+</body>
+
+<script>
+let elem;
+function executor () {
+
+
+  // Sending and receiving data in JSON format using POST method
+//
+var xhr = new XMLHttpRequest();
+var url = "http://192.168.0.121:4713";
+xhr.open("POST", url, true);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var json = JSON.parse(xhr.responseText);
+        elem.innerText =  xhr.responseText;
+        console.log('Responded:'+ json);
+    }
+};
+var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+xhr.send(data);
+
+}
+
+window.onload = ()=>{
+ elem = document.getElementById('info');
+let button = document.getElementById('btn');
+button.addEventListener('click',executor);
+  elem.innerText = new Date().toLocaleTimeString();
+}
+
+</script>
+</html>
